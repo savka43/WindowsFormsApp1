@@ -1,0 +1,157 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp1
+{
+    public partial class TsInspector : Form
+    {
+        DataBase db = new DataBase();
+        public TsInspector()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            InspectorMainForm frm = new InspectorMainForm();
+            frm.Show();
+            this.Hide();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TsInspector_Load(object sender, EventArgs e)
+        {
+            LoadOffenseTypes();   // заполняем ComboBox
+            LoadAllFines();       // по умолчанию показываем все штрафы
+        }
+        private void LoadAllFines()
+        {
+            SqlCommand cmd = new SqlCommand("GetFinesFiltered", db.getConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            db.openConnection();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            dataGridView1.DataSource = dt;
+
+            db.closeConnection();
+        }
+        private void LoadOffenseTypes()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT DISTINCT Вид_штрафа FROM Штраф", db.getConnection());
+
+            db.openConnection();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                offense.Items.Add(reader["Вид_штрафа"].ToString());
+            }
+
+            reader.Close();
+            db.closeConnection();
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void unpaidradiobutton_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            SqlCommand cmd = new SqlCommand("GetFinesFiltered", db.getConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            if (!string.IsNullOrWhiteSpace(startdate.Text))
+                cmd.Parameters.AddWithValue("@StartDate", DateTime.Parse(startdate.Text));
+
+            if (!string.IsNullOrWhiteSpace(endDate.Text))
+                cmd.Parameters.AddWithValue("@EndDate", DateTime.Parse(endDate.Text));
+
+            if (!string.IsNullOrWhiteSpace(textboxVIN.Text))
+                cmd.Parameters.AddWithValue("@VIN", textboxVIN.Text);
+
+            if (!string.IsNullOrWhiteSpace(textboxnumber.Text))
+                cmd.Parameters.AddWithValue("@LicenseNumber", textboxnumber.Text);
+
+            if (!string.IsNullOrWhiteSpace(insertName.Text))
+                cmd.Parameters.AddWithValue("@DriverName", insertName.Text);
+
+            if (!string.IsNullOrWhiteSpace(insertCertificate.Text))
+                cmd.Parameters.AddWithValue("@CertificateNumber", insertCertificate.Text);
+
+            if (offense.SelectedItem != null)
+                cmd.Parameters.AddWithValue("@OffenseType", offense.SelectedItem.ToString());
+
+            if (Paidradiobutton.Checked)
+                cmd.Parameters.AddWithValue("@PaymentStatus", "Оплачен");
+            else if (unpaidradiobutton.Checked)
+                cmd.Parameters.AddWithValue("@PaymentStatus", "Не оплачен");
+
+            db.openConnection();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            dataGridView1.DataSource = dt;
+
+            db.closeConnection();
+        }
+
+    }
+}
