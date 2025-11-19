@@ -89,6 +89,12 @@
     <Compile Include="InspectorMainForm.Designer.cs">
       <DependentUpon>InspectorMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InspectorUD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InspectorUD.Designer.cs">
+      <DependentUpon>InspectorUD.cs</DependentUpon>
+    </Compile>
     <Compile Include="OwnerDoverie.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InspectorMainForm.resx">
       <DependentUpon>InspectorMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorUD.resx">
+      <DependentUpon>InspectorUD.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OwnerDoverie.resx">
       <DependentUpon>OwnerDoverie.cs</DependentUpon>

@@ -42,7 +42,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(336, 44);
+            this.label1.Location = new System.Drawing.Point(340, 69);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(472, 91);
             this.label1.TabIndex = 2;
@@ -85,7 +85,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::WindowsFormsApp1.Properties.Resources.user;
-            this.pictureBox1.Location = new System.Drawing.Point(83, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(83, 44);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(181, 149);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -95,7 +95,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::WindowsFormsApp1.Properties.Resources.free_icon_form_7772008;
-            this.pictureBox2.Location = new System.Drawing.Point(885, 63);
+            this.pictureBox2.Location = new System.Drawing.Point(885, 84);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(79, 46);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;

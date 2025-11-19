@@ -31,5 +31,12 @@ namespace WindowsFormsApp1
             frm.Show();
             this.Hide();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            InspectorUD inspectorUD = new InspectorUD();
+            inspectorUD.Show();
+            this.Hide();
+        }
     }
 }
