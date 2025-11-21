@@ -38,5 +38,12 @@ namespace WindowsFormsApp1
             inspectorUD.Show();
             this.Hide();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            InspectorCars inspectorCars = new InspectorCars(); 
+            inspectorCars.Show();
+            this.Hide();
+        }
     }
 }
