@@ -42,9 +42,8 @@ namespace WindowsFormsApp1
         {
             dataBase.openConnection();
 
-            string procedureName = "ПолучитьДоверенностиВладельца"; 
 
-            using (SqlCommand command = new SqlCommand(procedureName, dataBase.getConnection()))
+            using (SqlCommand command = new SqlCommand("ПолучитьДоверенностиВладельца", dataBase.getConnection()))
             {
                 command.CommandType = CommandType.StoredProcedure;
 

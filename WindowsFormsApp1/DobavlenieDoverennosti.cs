@@ -43,24 +43,28 @@ namespace WindowsFormsApp1
         private void button1_Click(object sender, EventArgs e)
         {
             dataBase.openConnection();
+            SqlConnection conn = dataBase.getConnection();
 
-            SqlCommand command = new SqlCommand("ДобавитьДоверенность", dataBase.getConnection());
+           
+            conn.FireInfoMessageEventOnUserErrors = true;
+            conn.InfoMessage += (s, ev) =>
+            {
+                MessageBox.Show(ev.Message, "Сообщение");
+            };
+
+            SqlCommand command = new SqlCommand("ДобавитьДоверенность", conn);
             command.CommandType = CommandType.StoredProcedure;
 
-            // Передаем только Id владельца, номер ВУ и госномер
-            command.Parameters.AddWithValue("@Id_Владельца", 101); // Например, текущий владелец
-            command.Parameters.AddWithValue("@Номер_ВУ_Водителя", textBox3.Text);
-            command.Parameters.AddWithValue("@Гос_номер_ТС", textBox4.Text);
+    
+            command.Parameters.AddWithValue("@Id_Владельца", 101); 
+            command.Parameters.AddWithValue("@ВУ_Водителя", textBox3.Text.Trim());
+            command.Parameters.AddWithValue("@Гос_номер_ТС", textBox4.Text.Trim());
 
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataTable dt = new DataTable();
-            adapter.Fill(dt);
+         
+            command.ExecuteNonQuery();
 
-            if (dt.Rows.Count > 0)
-            {
-                MessageBox.Show("Доверенность успешно создана");
-            }
 
+   
             textBox3.Clear();
             textBox4.Clear();
 
