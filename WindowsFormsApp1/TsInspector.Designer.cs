@@ -75,6 +75,7 @@
             this.resetbutton.TabIndex = 3;
             this.resetbutton.Text = "Сброс";
             this.resetbutton.UseVisualStyleBackColor = true;
+            this.resetbutton.Click += new System.EventHandler(this.resetbutton_Click);
             // 
             // label2
             // 

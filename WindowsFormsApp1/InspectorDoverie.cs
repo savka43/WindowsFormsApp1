@@ -188,7 +188,6 @@ namespace WindowsFormsApp1
             if (CarBrand.SelectedIndex != -1)
                 LoadModels(CarBrand.SelectedItem.ToString());
 
-            ApplyFullFilter();
         }
 
         private void CarModel_SelectedIndexChanged_1(object sender, EventArgs e)

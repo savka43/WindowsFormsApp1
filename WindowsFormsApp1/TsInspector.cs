@@ -163,5 +163,29 @@ namespace WindowsFormsApp1
             addFines addFines = new addFines();
             addFines.Show();
         }
+
+        private void resetbutton_Click(object sender, EventArgs e)
+        {
+            textboxVIN.Text = "";
+            textboxnumber.Text = "";
+            insertName.Text = "";
+            insertCertificate.Text = "";
+
+
+            offense.SelectedIndex = -1;
+
+   
+            dateTimePicker1.Value = DateTime.Now;
+            dateTimePicker2.Value = DateTime.Now;
+            dateTimePicker1.Checked = false;
+            dateTimePicker2.Checked = false;
+
+  
+            Paidradiobutton.Checked = false;
+            unpaidradiobutton.Checked = false;
+
+            LoadAllFines();
+
+        }
     }
 }
