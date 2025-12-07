@@ -45,5 +45,26 @@ namespace WindowsFormsApp1
             inspectorCars.Show();
             this.Hide();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            InspectorOwner inspectorOwner = new InspectorOwner();
+            inspectorOwner.Show();
+            this.Hide();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            InspectorDoverie inspectorDoverie = new InspectorDoverie();
+            inspectorDoverie.Show();
+            this.Hide();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            InspectorDTP inspectorDTP = new InspectorDTP();
+            inspectorDTP.Show();
+            this.Hide();
+        }
     }
 }

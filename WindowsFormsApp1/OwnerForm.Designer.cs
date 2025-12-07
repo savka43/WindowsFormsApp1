@@ -46,9 +46,10 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(314, 99);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(494, 91);
+            this.label1.Size = new System.Drawing.Size(558, 91);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Иванов И.И.";
+            this.label1.Text = "Кириллов А.С";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
@@ -125,6 +126,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Name = "OwnerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "АккаутВладельца";
             this.Load += new System.EventHandler(this.OwnerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

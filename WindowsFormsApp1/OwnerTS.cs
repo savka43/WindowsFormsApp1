@@ -32,11 +32,11 @@ namespace WindowsFormsApp1
             db.openConnection();
 
            
-            SqlCommand command = new SqlCommand("ПолучитьИнфоОбАвтомобиле", db.getConnection());
+            SqlCommand command = new SqlCommand("ПолучитьАвтоВладельца", db.getConnection());
             command.CommandType = CommandType.StoredProcedure;
 
             
-            command.Parameters.AddWithValue("@Id_Водителя", driverId);
+            command.Parameters.AddWithValue("@Id_Владельца", driverId);
 
            
             SqlDataAdapter adapter = new SqlDataAdapter(command);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        private DataBase db = new DataBase();
         public Form1()
         {
             InitializeComponent();
@@ -45,71 +47,78 @@ namespace WindowsFormsApp1
         private void button1_Click(object sender, EventArgs e)
         {
 
-            const string DriverLogin = "Driver";
-            const string DriverPassword = "123";
-
-            const string OwnerLogin = "Owner";
-            const string OwnerPassword = "321";
-
-            const string InspectorLogin = "Inspector";
-            const string InspectorPassword = "456";
-
-            string enteredLogin = textBox1.Text;
-            string enteredPassword = textBox2.Text;
-
-            if (enteredLogin == DriverLogin && enteredPassword == DriverPassword)
-            {
-                // Успешный вход как водитель
-                try
-                {
-                    DriverMainForm driverForm = new DriverMainForm();
-                    driverForm.Show();
-                    this.Hide();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Ошибка: Невозможно найти форму 'DriverMainForm'. Убедитесь, что она создана.", "Критическая ошибка");
-                }
-            }
-            else if (enteredLogin == OwnerLogin && enteredPassword == OwnerPassword)
-            {
-                // Успешный вход как владелец
-                try
-                {
-                    OwnerForm ownerForm = new OwnerForm();
-                    ownerForm.Show();
-                    this.Hide();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Ошибка: Невозможно найти форму 'OwnerForm'. Убедитесь, что она создана.", "Критическая ошибка");
-                }
-            }
-            else if (enteredLogin == InspectorLogin && enteredPassword == InspectorPassword)
-            {
-                // Успешный вход как инспектор
-                try
-                {
-                    InspectorMainForm inspectorForm = new InspectorMainForm();
-                    inspectorForm.Show();
-                    this.Hide();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Ошибка: Невозможно найти форму 'InspectorMainForm'. Убедитесь, что она создана.", "Критическая ошибка");
-                }
-            }
-            else
-            {
-                // Неуспешный вход
-                MessageBox.Show("Неверный логин или пароль.", "Ошибка входа",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void LoginUser(string role, string message)
+        {
+            InputForm input = new InputForm(message);
+
+            if (input.ShowDialog() != DialogResult.OK)
+                return;
+
+            string value = input.InputValue;
+
+            db.openConnection();
+
+            SqlCommand cmd = new SqlCommand("ЛогинПользователя", db.getConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Role", role);
+            cmd.Parameters.AddWithValue("@InputValue", value);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read() && reader["Result"].ToString() == "OK")
+            {
+                int id = Convert.ToInt32(reader["UserId"]);
+                db.closeConnection();
+
+                // Открываем нужную форму
+                switch (role)
+                {
+                    case "Driver":
+                        DriverMainForm driver = new DriverMainForm();
+                        driver.Show();
+                        break;
+
+                    case "Owner":
+                        OwnerForm owner = new OwnerForm();
+                        owner.Show();
+                        break;
+
+                    case "Inspector":
+                        InspectorMainForm inspector = new InspectorMainForm();
+                        inspector.Show();
+                        break;
+                }
+
+                this.Hide();
+                return;
+            }
+
+            db.closeConnection();
+            MessageBox.Show("Данные не найдены!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void driverButton_Click(object sender, EventArgs e)
+        {
+            LoginUser("Driver", "Введите номер ВУ:");
+        }
+
+        private void ownerButton_Click(object sender, EventArgs e)
+        {
+            LoginUser("Owner", "Введите номер паспорта:");
+        }
+
+        private void inspectorButton_Click(object sender, EventArgs e)
+        {
+            LoginUser("Inspector", "Введите номер значка:");
         }
     }
 }

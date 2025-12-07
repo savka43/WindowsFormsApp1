@@ -38,55 +38,25 @@ namespace WindowsFormsApp1
             LoadDoverenosti();
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton1.Checked)
-            {
-                LoadDoverenosti();
-            }
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton2.Checked)
-            {
-                LoadDoverenosti();
-            }
-        }
-
         private void LoadDoverenosti()
         {
             dataBase.openConnection();
 
-            string procedureName = "ПолучитьДоверенностиВодителя";
-            string tipDoverenosti = "";
-
-            if (radioButton1.Checked)
-            {
-                tipDoverenosti = "received";
-            }
-            else if (radioButton2.Checked)
-            {
-                tipDoverenosti = "issued";
-            }
-            else
-            {
-                tipDoverenosti = "received";
-                radioButton1.Checked = true;
-            }
+            string procedureName = "ПолучитьДоверенностиВладельца"; 
 
             using (SqlCommand command = new SqlCommand(procedureName, dataBase.getConnection()))
             {
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@Id_Водителя", SqlDbType.Int).Value = currentDriverId;
-                command.Parameters.Add("@Тип_доверенности", SqlDbType.VarChar, 20).Value = tipDoverenosti;
+              
+                command.Parameters.Add("@Id_Владельца", SqlDbType.Int).Value = currentDriverId; 
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
                 dataGridView1.DataSource = dataTable;
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
 
             dataBase.closeConnection();

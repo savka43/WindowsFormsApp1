@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WindowsFormsApp1
 {
@@ -39,36 +40,33 @@ namespace WindowsFormsApp1
         {
 
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            
             dataBase.openConnection();
 
-            SqlCommand command = new SqlCommand("ДобавитьДоверенностьПоДанным", dataBase.getConnection());
+            SqlCommand command = new SqlCommand("ДобавитьДоверенность", dataBase.getConnection());
             command.CommandType = CommandType.StoredProcedure;
 
-     
-            command.Parameters.AddWithValue("@ФИО_Владельца", "Иванов И.И.");
-            command.Parameters.AddWithValue("@Паспорт_Владельца", textBox2.Text); 
-            command.Parameters.AddWithValue("@ФИО_Водителя", textBox1.Text); 
-            command.Parameters.AddWithValue("@Номер_ВУ_Водителя", textBox3.Text); 
-            command.Parameters.AddWithValue("@Гос_номер_ТС", textBox4.Text); 
-            command.Parameters.AddWithValue("@Дата_Выдачи", DateTime.Now);
-            command.Parameters.AddWithValue("@Дата_Окончания", DateTime.Now.AddYears(1)); 
+            // Передаем только Id владельца, номер ВУ и госномер
+            command.Parameters.AddWithValue("@Id_Владельца", 101); // Например, текущий владелец
+            command.Parameters.AddWithValue("@Номер_ВУ_Водителя", textBox3.Text);
+            command.Parameters.AddWithValue("@Гос_номер_ТС", textBox4.Text);
 
-            command.ExecuteNonQuery();
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                MessageBox.Show("Доверенность успешно создана");
+            }
+
+            textBox3.Clear();
+            textBox4.Clear();
 
             dataBase.closeConnection();
-
-            MessageBox.Show("Доверенность успешно добавлена!");
-
-
-            textBox1.Text = "";
-            textBox2.Text = "";
-            textBox3.Text = "";
-            textBox4.Text = "";
         }
+
 
         private void button2_Click(object sender, EventArgs e)
         {

@@ -20,7 +20,6 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            // Двойной клик по DataGridView
             this.dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
         }
 
@@ -28,82 +27,63 @@ namespace WindowsFormsApp1
         {
             dateStart.Checked = false;
             dateEnd.Checked = false;
-            // При открытии формы показываем все водители
             LoadAllDrivers();
         }
 
         private void LoadAllDrivers()
         {
-            SqlCommand cmd = new SqlCommand("FilterDrivers", db.getConnection());
+            SqlCommand cmd = new SqlCommand("ФильтрУдостоверений", db.getConnection());
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Все параметры null для отображения всех записей
             cmd.Parameters.AddWithValue("@FIO", DBNull.Value);
             cmd.Parameters.AddWithValue("@Номер_BY", DBNull.Value);
             cmd.Parameters.AddWithValue("@ДатаОт", DBNull.Value);
             cmd.Parameters.AddWithValue("@ДатаДо", DBNull.Value);
 
             db.openConnection();
-
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
+            db.closeConnection();
 
             dataGridView1.DataSource = dt;
 
-            db.closeConnection();
+         
+            if (dataGridView1.Columns.Contains("Id_Водителя"))
+                dataGridView1.Columns["Id_Водителя"].Visible = false;
         }
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("FilterDrivers", db.getConnection());
+            SqlCommand cmd = new SqlCommand("ФильтрУдостоверений", db.getConnection());
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // Только добавляем параметры, если они заполнены
-            if (!string.IsNullOrWhiteSpace(textFio.Text))
-                cmd.Parameters.AddWithValue("@FIO", textFio.Text);
-            else
-                cmd.Parameters.AddWithValue("@FIO", DBNull.Value);
-
-            if (!string.IsNullOrWhiteSpace(textNumber.Text))
-                cmd.Parameters.AddWithValue("@Номер_BY", textNumber.Text);
-            else
-                cmd.Parameters.AddWithValue("@Номер_BY", DBNull.Value);
-
-            if (dateStart.Checked)
-                cmd.Parameters.AddWithValue("@ДатаОт", dateStart.Value.Date);
-            else
-                cmd.Parameters.AddWithValue("@ДатаОт", DBNull.Value);
-
-            if (dateEnd.Checked)
-                cmd.Parameters.AddWithValue("@ДатаДо", dateEnd.Value.Date);
-            else
-                cmd.Parameters.AddWithValue("@ДатаДо", DBNull.Value);
+            cmd.Parameters.AddWithValue("@FIO", string.IsNullOrWhiteSpace(textFio.Text) ? (object)DBNull.Value : textFio.Text);
+            cmd.Parameters.AddWithValue("@Номер_BY", string.IsNullOrWhiteSpace(textNumber.Text) ? (object)DBNull.Value : textNumber.Text);
+            cmd.Parameters.AddWithValue("@ДатаОт", dateStart.Checked ? (object)dateStart.Value.Date : DBNull.Value);
+            cmd.Parameters.AddWithValue("@ДатаДо", dateEnd.Checked ? (object)dateEnd.Value.Date : DBNull.Value);
 
             db.openConnection();
-
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
+            db.closeConnection();
 
             dataGridView1.DataSource = dt;
 
-            db.closeConnection();
+            if (dataGridView1.Columns.Contains("Id_Водителя"))
+                dataGridView1.Columns["Id_Водителя"].Visible = false;
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
         {
-            // Сбрасываем текстовые поля
             textFio.Text = "";
             textNumber.Text = "";
-
-            // Сбрасываем DateTimePicker
             dateStart.Value = DateTime.Today;
             dateEnd.Value = DateTime.Today;
             dateStart.Checked = false;
             dateEnd.Checked = false;
 
-            // Загружаем все записи заново
             LoadAllDrivers();
         }
 
@@ -118,29 +98,30 @@ namespace WindowsFormsApp1
         {
             if (e.RowIndex >= 0)
             {
-                string selectedFio = dataGridView1.Rows[e.RowIndex].Cells["ФИО"].Value.ToString();
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
-                SqlCommand cmd = new SqlCommand("FilterDrivers", db.getConnection());
-                cmd.CommandType = CommandType.StoredProcedure;
+                int id = Convert.ToInt32(row.Cells["Id_Водителя"].Value);
+                string fio = row.Cells["ФИО"].Value.ToString();
+                DateTime birth = Convert.ToDateTime(row.Cells["Дата_рождения"].Value);
+                string number = row.Cells["Номер_BY"].Value.ToString();
+                DateTime start = Convert.ToDateTime(row.Cells["Дата_Выдачи"].Value);
+                DateTime end = Convert.ToDateTime(row.Cells["Дата_Окончания"].Value);
+                string category = row.Cells["Категория"].Value.ToString();
 
-                cmd.Parameters.AddWithValue("@FIO", selectedFio);
-                cmd.Parameters.AddWithValue("@Номер_BY", DBNull.Value);
-                cmd.Parameters.AddWithValue("@ДатаОт", DBNull.Value);
-                cmd.Parameters.AddWithValue("@ДатаДо", DBNull.Value);
+                EditUd editForm = new EditUd(id, fio, birth, number, start, end, category);
+                editForm.ShowDialog();
 
-                db.openConnection();
-
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-
-                dataGridView1.DataSource = dt;
-
-                db.closeConnection();
+                LoadAllDrivers();
             }
         }
 
-        // Если Designer ругается, просто добавляем пустой обработчик
+   
         private void label3_Click(object sender, EventArgs e) { }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            NewUD newUDForm = new NewUD();
+            newUDForm.Show();
+        }
     }
 }

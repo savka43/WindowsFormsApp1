@@ -47,6 +47,7 @@
             this.endDate = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -147,10 +148,10 @@
             // 
             // dateRegistration
             // 
-            this.dateRegistration.Location = new System.Drawing.Point(626, 69);
+            this.dateRegistration.Location = new System.Drawing.Point(651, 73);
             this.dateRegistration.Name = "dateRegistration";
             this.dateRegistration.ShowCheckBox = true;
-            this.dateRegistration.Size = new System.Drawing.Size(298, 20);
+            this.dateRegistration.Size = new System.Drawing.Size(141, 20);
             this.dateRegistration.TabIndex = 13;
             this.dateRegistration.ValueChanged += new System.EventHandler(this.dateRegistration_ValueChanged);
             // 
@@ -176,9 +177,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(35, 609);
+            this.button3.Location = new System.Drawing.Point(57, 588);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(75, 32);
             this.button3.TabIndex = 16;
             this.button3.Text = "Назад";
             this.button3.UseVisualStyleBackColor = true;
@@ -187,9 +188,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(177, 117);
+            this.dataGridView1.Location = new System.Drawing.Point(57, 117);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(723, 454);
+            this.dataGridView1.Size = new System.Drawing.Size(1005, 454);
             this.dataGridView1.TabIndex = 17;
             // 
             // startDate
@@ -199,6 +200,7 @@
             this.startDate.ShowCheckBox = true;
             this.startDate.Size = new System.Drawing.Size(141, 20);
             this.startDate.TabIndex = 18;
+            this.startDate.ValueChanged += new System.EventHandler(this.startDate_ValueChanged);
             // 
             // endDate
             // 
@@ -226,11 +228,22 @@
             this.label8.TabIndex = 21;
             this.label8.Text = "До";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(956, 588);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(106, 32);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "Добавить ТС";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // InspectorCars
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1123, 658);
+            this.ClientSize = new System.Drawing.Size(1123, 665);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.endDate);
@@ -280,5 +293,6 @@
         private System.Windows.Forms.DateTimePicker endDate;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button1;
     }
 }

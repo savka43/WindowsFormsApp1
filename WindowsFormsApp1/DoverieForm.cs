@@ -28,9 +28,9 @@ namespace WindowsFormsApp1
 
         private void LoadDoverennosti()
         {
-            SqlCommand command = new SqlCommand("ПолучитьДоверенностиПоВодителю", database.getConnection());
+            SqlCommand command = new SqlCommand("ПолучитьДоверенностиВодителя", database.getConnection());
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@Id_Водителя", 101); // конкретный водитель
+            command.Parameters.AddWithValue("@Id_Водителя", 102); // конкретный водитель
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             DataTable table = new DataTable();

@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
                 command.CommandType = CommandType.StoredProcedure;
 
                
-                command.Parameters.AddWithValue("@Id_TC", 101); 
+                command.Parameters.AddWithValue("@Id_ТС", 101); 
                 command.Parameters.AddWithValue("@Статус", status);
 
                 
@@ -93,6 +93,9 @@ namespace WindowsFormsApp1
 
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

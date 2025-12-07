@@ -44,7 +44,7 @@
             this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(616, 104);
+            this.groupBox1.Location = new System.Drawing.Point(724, 103);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(161, 234);
             this.groupBox1.TabIndex = 7;
@@ -91,24 +91,25 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 35.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(64, 18);
+            this.label1.Location = new System.Drawing.Point(238, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(426, 54);
+            this.label1.Size = new System.Drawing.Size(458, 54);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Штрафы водителя";
+            this.label1.Text = "Штрафы владельца";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(23, 85);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(561, 286);
+            this.dataGridView1.Size = new System.Drawing.Size(675, 286);
             this.dataGridView1.TabIndex = 5;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(23, 396);
+            this.button2.Location = new System.Drawing.Point(23, 417);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(120, 37);
             this.button2.TabIndex = 4;
@@ -120,7 +121,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(924, 503);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);

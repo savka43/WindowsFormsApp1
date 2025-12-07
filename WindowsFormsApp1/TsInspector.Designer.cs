@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.startdate = new System.Windows.Forms.TextBox();
-            this.endDate = new System.Windows.Forms.TextBox();
             this.resetbutton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textboxnumber = new System.Windows.Forms.TextBox();
@@ -51,6 +49,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -66,27 +67,11 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // startdate
-            // 
-            this.startdate.Location = new System.Drawing.Point(82, 23);
-            this.startdate.Name = "startdate";
-            this.startdate.Size = new System.Drawing.Size(100, 20);
-            this.startdate.TabIndex = 1;
-            this.startdate.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // endDate
-            // 
-            this.endDate.Location = new System.Drawing.Point(222, 23);
-            this.endDate.Name = "endDate";
-            this.endDate.Size = new System.Drawing.Size(100, 20);
-            this.endDate.TabIndex = 2;
-            this.endDate.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
             // resetbutton
             // 
-            this.resetbutton.Location = new System.Drawing.Point(347, 22);
+            this.resetbutton.Location = new System.Drawing.Point(545, 96);
             this.resetbutton.Name = "resetbutton";
-            this.resetbutton.Size = new System.Drawing.Size(75, 23);
+            this.resetbutton.Size = new System.Drawing.Size(75, 38);
             this.resetbutton.TabIndex = 3;
             this.resetbutton.Text = "Сброс";
             this.resetbutton.UseVisualStyleBackColor = true;
@@ -94,7 +79,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(477, 28);
+            this.label2.Location = new System.Drawing.Point(456, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 5;
@@ -130,7 +115,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(37, 143);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(972, 341);
+            this.dataGridView1.Size = new System.Drawing.Size(959, 341);
             this.dataGridView1.TabIndex = 10;
             // 
             // fileSystemWatcher1
@@ -151,7 +136,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(194, 28);
+            this.label4.Location = new System.Drawing.Point(220, 28);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 13);
             this.label4.TabIndex = 12;
@@ -159,7 +144,7 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(614, 96);
+            this.SearchButton.Location = new System.Drawing.Point(639, 96);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(84, 38);
             this.SearchButton.TabIndex = 14;
@@ -270,11 +255,40 @@
             this.label7.TabIndex = 21;
             this.label7.Text = "Введите VIN авто";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(851, 501);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(145, 42);
+            this.button2.TabIndex = 22;
+            this.button2.Text = "Добавить";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(74, 25);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.ShowCheckBox = true;
+            this.dateTimePicker1.Size = new System.Drawing.Size(140, 20);
+            this.dateTimePicker1.TabIndex = 23;
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Location = new System.Drawing.Point(250, 25);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.ShowCheckBox = true;
+            this.dateTimePicker2.Size = new System.Drawing.Size(142, 20);
+            this.dateTimePicker2.TabIndex = 24;
+            // 
             // TsInspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1044, 571);
+            this.Controls.Add(this.dateTimePicker2);
+            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -291,8 +305,6 @@
             this.Controls.Add(this.textboxnumber);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.resetbutton);
-            this.Controls.Add(this.endDate);
-            this.Controls.Add(this.startdate);
             this.Controls.Add(this.button1);
             this.Name = "TsInspector";
             this.Text = "Транспортные средства";
@@ -309,8 +321,6 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox startdate;
-        private System.Windows.Forms.TextBox endDate;
         private System.Windows.Forms.Button resetbutton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textboxnumber;
@@ -331,5 +341,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.inspectorButton = new System.Windows.Forms.Button();
+            this.driverButton = new System.Windows.Forms.Button();
+            this.ownerButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Login = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,75 +48,63 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // textBox2
+            // inspectorButton
             // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(64, 339);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(269, 40);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.inspectorButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.inspectorButton.Location = new System.Drawing.Point(62, 409);
+            this.inspectorButton.Name = "inspectorButton";
+            this.inspectorButton.Size = new System.Drawing.Size(258, 36);
+            this.inspectorButton.TabIndex = 7;
+            this.inspectorButton.Text = "Инспектор";
+            this.inspectorButton.UseVisualStyleBackColor = false;
+            this.inspectorButton.Click += new System.EventHandler(this.inspectorButton_Click);
             // 
-            // textBox1
+            // driverButton
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(64, 258);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(269, 40);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.driverButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.driverButton.Location = new System.Drawing.Point(62, 283);
+            this.driverButton.Name = "driverButton";
+            this.driverButton.Size = new System.Drawing.Size(258, 36);
+            this.driverButton.TabIndex = 8;
+            this.driverButton.Text = "Водитель";
+            this.driverButton.UseVisualStyleBackColor = false;
+            this.driverButton.Click += new System.EventHandler(this.driverButton_Click);
+            // 
+            // ownerButton
+            // 
+            this.ownerButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ownerButton.Location = new System.Drawing.Point(62, 348);
+            this.ownerButton.Name = "ownerButton";
+            this.ownerButton.Size = new System.Drawing.Size(258, 36);
+            this.ownerButton.TabIndex = 9;
+            this.ownerButton.Text = "Владелец";
+            this.ownerButton.UseVisualStyleBackColor = false;
+            this.ownerButton.Click += new System.EventHandler(this.ownerButton_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(64, 225);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(145, 229);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Логин";
-            this.label1.UseWaitCursor = true;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(64, 314);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Пароль";
-            this.label2.UseWaitCursor = true;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // Login
-            // 
-            this.Login.BackColor = System.Drawing.Color.Aquamarine;
-            this.Login.Location = new System.Drawing.Point(85, 394);
-            this.Login.Name = "Login";
-            this.Login.Size = new System.Drawing.Size(221, 23);
-            this.Login.TabIndex = 6;
-            this.Login.Text = "Войти";
-            this.Login.UseVisualStyleBackColor = false;
-            this.Login.Click += new System.EventHandler(this.button1_Click);
+            this.label1.Size = new System.Drawing.Size(85, 20);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Войти как";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(400, 488);
-            this.Controls.Add(this.Login);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(400, 574);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.ownerButton);
+            this.Controls.Add(this.driverButton);
+            this.Controls.Add(this.inspectorButton);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
-            this.Text = "ыфвыфывфвыцвцвцвцвцвц";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Логин";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -128,11 +115,10 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button inspectorButton;
+        private System.Windows.Forms.Button driverButton;
+        private System.Windows.Forms.Button ownerButton;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button Login;
     }
 }
 

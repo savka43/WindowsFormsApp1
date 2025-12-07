@@ -11,7 +11,7 @@ namespace WindowsFormsApp1
     {
         // Подключение к MSSQL
         private SqlConnection sqlConnection = new SqlConnection(
-            @"Data Source=localhost\SQLEXPRESS;Initial Catalog=GIBDDPR;Integrated Security=True");
+            @"Data Source=localhost\SQLEXPRESS;Initial Catalog=GIBDDKURS;Integrated Security=True");
 
         // Открытие соединения
         public void openConnection()

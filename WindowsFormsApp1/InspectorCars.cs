@@ -43,14 +43,6 @@ namespace WindowsFormsApp1
             foreach (DataRow row in dtBrand.Rows)
                 carBrand.Items.Add(row["Марка"].ToString());
 
-            // Модели
-            SqlCommand cmdModel = new SqlCommand("SELECT DISTINCT Модель FROM ТС", db.getConnection());
-            SqlDataAdapter daModel = new SqlDataAdapter(cmdModel);
-            DataTable dtModel = new DataTable();
-            daModel.Fill(dtModel);
-            modelCar.Items.Clear();
-            foreach (DataRow row in dtModel.Rows)
-                modelCar.Items.Add(row["Модель"].ToString());
 
             // Цвета
             SqlCommand cmdColor = new SqlCommand("SELECT DISTINCT Цвет FROM ТС", db.getConnection());
@@ -64,7 +56,7 @@ namespace WindowsFormsApp1
             db.closeConnection();
         }
 
-        private void LoadCars(string brand, string model, short? year, DateTime? start, DateTime? end, string color, string plate)
+        private void LoadCars(string brand, string model, short? yearStart, short? yearEnd, string color, string plate, DateTime? registrationDate)
         {
             using (SqlCommand cmd = new SqlCommand("ФильтрТС", db.getConnection()))
             {
@@ -72,30 +64,11 @@ namespace WindowsFormsApp1
 
                 cmd.Parameters.AddWithValue("@Марка", string.IsNullOrWhiteSpace(brand) ? (object)DBNull.Value : brand);
                 cmd.Parameters.AddWithValue("@Модель", string.IsNullOrWhiteSpace(model) ? (object)DBNull.Value : model);
-                cmd.Parameters.AddWithValue("@Год", year.HasValue ? (object)year : DBNull.Value);
+                cmd.Parameters.AddWithValue("@ГодНачало", yearStart.HasValue ? (object)yearStart.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@ГодКонец", yearEnd.HasValue ? (object)yearEnd.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@Цвет", string.IsNullOrWhiteSpace(color) ? (object)DBNull.Value : color);
                 cmd.Parameters.AddWithValue("@ГосНомер", string.IsNullOrWhiteSpace(plate) ? (object)DBNull.Value : plate);
-
-                // Передаём дату постановки только если обе даты заданы
-                if (start.HasValue && end.HasValue)
-                {
-                    cmd.CommandText = @"
-                SELECT *
-                FROM ТС
-                WHERE (@Марка IS NULL OR Марка = @Марка)
-                  AND (@Модель IS NULL OR Модель = @Модель)
-                  AND (@Год IS NULL OR Год_Выпуска = @Год)
-                  AND (@Цвет IS NULL OR Цвет = @Цвет)
-                  AND (@ГосНомер IS NULL OR Гос_номер = @ГосНомер)
-                  AND Дата_Постановки BETWEEN @Start AND @End";
-
-                    cmd.Parameters.AddWithValue("@Start", start.Value.Date);
-                    cmd.Parameters.AddWithValue("@End", end.Value.Date);
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@ДатаПостановки", DBNull.Value);
-                }
+                cmd.Parameters.AddWithValue("@ДатаПостановки", registrationDate.HasValue ? (object)registrationDate.Value.Date : DBNull.Value);
 
                 DataTable table = new DataTable();
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -105,6 +78,7 @@ namespace WindowsFormsApp1
                 db.closeConnection();
 
                 dataGridView1.DataSource = table;
+                dataGridView1.Columns["Id_ТС"].Visible = false;
             }
         }
 
@@ -115,10 +89,11 @@ namespace WindowsFormsApp1
             string color = carColor.SelectedItem?.ToString();
             string plate = carPlate.Text.Trim();
 
-            DateTime? start = startDate.Checked ? startDate.Value.Date : (DateTime?)null;
-            DateTime? end = endDate.Checked ? endDate.Value.Date : (DateTime?)null;
+            short? yearStart = startDate.Checked ? (short?)startDate.Value.Year : null;
+            short? yearEnd = endDate.Checked ? (short?)endDate.Value.Year : null;
+            DateTime? registrationDate = dateRegistration.Checked ? (DateTime?)dateRegistration.Value.Date : null;
 
-            LoadCars(brand, model, null, start, end, color, plate);
+            LoadCars(brand, model, yearStart, yearEnd, color, plate, registrationDate);
         }
 
         private void resetButton_Click(object sender, EventArgs e)
@@ -129,6 +104,7 @@ namespace WindowsFormsApp1
             carPlate.Clear();
             startDate.Checked = false;
             endDate.Checked = false;
+            dateRegistration.Checked = false;
 
             LoadCars(null, null, null, null, null, null, null);
         }
@@ -140,10 +116,49 @@ namespace WindowsFormsApp1
             this.Hide();
         }
 
-        private void carBrand_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void carBrand_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedBrand = carBrand.SelectedItem?.ToString();
+
+            if (string.IsNullOrEmpty(selectedBrand))
+                return;
+
+            modelCar.Items.Clear();
+
+            db.openConnection();
+
+            SqlCommand cmd = new SqlCommand(
+                "SELECT DISTINCT Модель FROM ТС WHERE Марка = @Марка",
+                db.getConnection()
+            );
+            cmd.Parameters.AddWithValue("@Марка", selectedBrand);
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            foreach (DataRow row in dt.Rows)
+                modelCar.Items.Add(row["Модель"].ToString());
+
+            db.closeConnection();
+
+            // Сбрасываем выбранную модель при смене марки
+            modelCar.SelectedIndex = -1;
+        }
         private void modelCar_SelectedIndexChanged(object sender, EventArgs e) { }
         private void label4_Click(object sender, EventArgs e) { }
         private void label5_Click(object sender, EventArgs e) { }
         private void dateRegistration_ValueChanged(object sender, EventArgs e) { }
+
+        private void startDate_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NewCar newCar = new NewCar();
+            newCar.Show();
+        }
     }
 }

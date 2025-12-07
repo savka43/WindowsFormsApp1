@@ -17,6 +17,9 @@ namespace WindowsFormsApp1
         public TsInspector()
         {
             InitializeComponent();
+
+            dateTimePicker1.Checked = false;
+            dateTimePicker2.Checked = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -59,12 +62,12 @@ namespace WindowsFormsApp1
 
         private void TsInspector_Load(object sender, EventArgs e)
         {
-            LoadOffenseTypes();   // заполняем ComboBox
-            LoadAllFines();       // по умолчанию показываем все штрафы
+            LoadOffenseTypes();   
+            LoadAllFines();     
         }
         private void LoadAllFines()
         {
-            SqlCommand cmd = new SqlCommand("GetFinesFiltered", db.getConnection());
+            SqlCommand cmd = new SqlCommand("ФильтрШтрафовИнспектор", db.getConnection());
             cmd.CommandType = CommandType.StoredProcedure;
 
             db.openConnection();
@@ -73,6 +76,7 @@ namespace WindowsFormsApp1
             DataTable dt = new DataTable();
             adapter.Fill(dt);
             dataGridView1.DataSource = dt;
+            dataGridView1.Columns["Дата_постановления"].DisplayIndex = 0;
 
             db.closeConnection();
         }
@@ -114,14 +118,15 @@ namespace WindowsFormsApp1
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("GetFinesFiltered", db.getConnection());
+            SqlCommand cmd = new SqlCommand("ФильтрШтрафовИнспектор", db.getConnection());
             cmd.CommandType = CommandType.StoredProcedure;
 
-            if (!string.IsNullOrWhiteSpace(startdate.Text))
-                cmd.Parameters.AddWithValue("@StartDate", DateTime.Parse(startdate.Text));
+          
+            if (dateTimePicker1.Checked)
+                cmd.Parameters.AddWithValue("@StartDate", dateTimePicker1.Value);
 
-            if (!string.IsNullOrWhiteSpace(endDate.Text))
-                cmd.Parameters.AddWithValue("@EndDate", DateTime.Parse(endDate.Text));
+            if (dateTimePicker2.Checked)
+                cmd.Parameters.AddWithValue("@EndDate", dateTimePicker2.Value);
 
             if (!string.IsNullOrWhiteSpace(textboxVIN.Text))
                 cmd.Parameters.AddWithValue("@VIN", textboxVIN.Text);
@@ -153,5 +158,10 @@ namespace WindowsFormsApp1
             db.closeConnection();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            addFines addFines = new addFines();
+            addFines.Show();
+        }
     }
 }

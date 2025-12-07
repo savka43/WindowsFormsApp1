@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addFines.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addFines.Designer.cs">
+      <DependentUpon>addFines.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataBase.cs" />
     <Compile Include="DobavlenieDoverennosti.cs">
       <SubType>Form</SubType>
@@ -77,11 +83,23 @@
     <Compile Include="DriverTSForm.Designer.cs">
       <DependentUpon>DriverTSForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditUd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditUd.Designer.cs">
+      <DependentUpon>EditUd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputForm.Designer.cs">
+      <DependentUpon>InputForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InspectorCars.cs">
       <SubType>Form</SubType>
@@ -89,17 +107,71 @@
     <Compile Include="InspectorCars.Designer.cs">
       <DependentUpon>InspectorCars.cs</DependentUpon>
     </Compile>
+    <Compile Include="InspectorDoverie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InspectorDoverie.Designer.cs">
+      <DependentUpon>InspectorDoverie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InspectorDTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InspectorDTP.Designer.cs">
+      <DependentUpon>InspectorDTP.cs</DependentUpon>
+    </Compile>
     <Compile Include="InspectorMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="InspectorMainForm.Designer.cs">
       <DependentUpon>InspectorMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InspectorOwner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InspectorOwner.Designer.cs">
+      <DependentUpon>InspectorOwner.cs</DependentUpon>
+    </Compile>
     <Compile Include="InspectorUD.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="InspectorUD.Designer.cs">
       <DependentUpon>InspectorUD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login.Designer.cs">
+      <DependentUpon>login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewCar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewCar.Designer.cs">
+      <DependentUpon>NewCar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewDTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewDTP.Designer.cs">
+      <DependentUpon>NewDTP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewOwner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewOwner.Designer.cs">
+      <DependentUpon>NewOwner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewParticipant.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewParticipant.Designer.cs">
+      <DependentUpon>NewParticipant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewUD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewUD.Designer.cs">
+      <DependentUpon>NewUD.cs</DependentUpon>
     </Compile>
     <Compile Include="OwnerDoverie.cs">
       <SubType>Form</SubType>
@@ -139,6 +211,9 @@
     <Compile Include="TsInspector.Designer.cs">
       <DependentUpon>TsInspector.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="addFines.resx">
+      <DependentUpon>addFines.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DobavlenieDoverennosti.resx">
       <DependentUpon>DobavlenieDoverennosti.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,17 +229,50 @@
     <EmbeddedResource Include="DriverTSForm.resx">
       <DependentUpon>DriverTSForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditUd.resx">
+      <DependentUpon>EditUd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InputForm.resx">
+      <DependentUpon>InputForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InspectorCars.resx">
       <DependentUpon>InspectorCars.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InspectorDoverie.resx">
+      <DependentUpon>InspectorDoverie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorDTP.resx">
+      <DependentUpon>InspectorDTP.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InspectorMainForm.resx">
       <DependentUpon>InspectorMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InspectorOwner.resx">
+      <DependentUpon>InspectorOwner.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InspectorUD.resx">
       <DependentUpon>InspectorUD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="login.resx">
+      <DependentUpon>login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewCar.resx">
+      <DependentUpon>NewCar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewDTP.resx">
+      <DependentUpon>NewDTP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewOwner.resx">
+      <DependentUpon>NewOwner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewParticipant.resx">
+      <DependentUpon>NewParticipant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewUD.resx">
+      <DependentUpon>NewUD.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OwnerDoverie.resx">
       <DependentUpon>OwnerDoverie.cs</DependentUpon>

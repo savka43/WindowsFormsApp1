@@ -56,34 +56,30 @@ namespace WindowsFormsApp1
         }
         private void DriverFinesForm_Load(object sender, EventArgs e)
         {
-            // Загружаем все штрафы при старте формы
+            
             LoadFines("Все");
         }
 
-        // Метод для загрузки штрафов по статусу
+        
         private void LoadFines(string status)
         {
-            // Открываем соединение
-            db.openConnection();
-
-            // Создаем команду для вызова процедуры
-            SqlCommand command = new SqlCommand("ПолучитьШтрафы", db.getConnection());
+            SqlCommand command = new SqlCommand("ПолучитьШтрафыВодителя", db.getConnection());
             command.CommandType = CommandType.StoredProcedure;
 
-            // ✅ Добавляем параметры
-            command.Parameters.AddWithValue("@Id_TC", 101); // Константа — айди ТС Иванова
+            
+            command.Parameters.AddWithValue("@Id_Водителя", 102); 
             command.Parameters.AddWithValue("@Статус", status);
 
-            // Создаем адаптер и таблицу
+       
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             DataTable table = new DataTable();
             adapter.Fill(table);
 
-            // Привязываем данные к таблице
+        
             dataGridView1.DataSource = table;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            // Закрываем соединение
+
             db.closeConnection();
         }
 
