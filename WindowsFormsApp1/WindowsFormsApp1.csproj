@@ -211,6 +211,12 @@
     <Compile Include="TsInspector.Designer.cs">
       <DependentUpon>TsInspector.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpdateTs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateTs.Designer.cs">
+      <DependentUpon>UpdateTs.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="addFines.resx">
       <DependentUpon>addFines.cs</DependentUpon>
     </EmbeddedResource>
@@ -298,6 +304,9 @@
     </Compile>
     <EmbeddedResource Include="TsInspector.resx">
       <DependentUpon>TsInspector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateTs.resx">
+      <DependentUpon>UpdateTs.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

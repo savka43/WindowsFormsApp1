@@ -28,6 +28,44 @@ namespace WindowsFormsApp1
 
             LoadComboBoxes();
             LoadCars(null, null, null, null, null, null, null);
+
+            dataGridView1.CellDoubleClick += DataGridView1_CellDoubleClick;
+
+        }
+
+        private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) // Игнорируем клик по заголовкам
+                return;
+
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+            // Получаем данные о ТС из строки
+            int idTs = Convert.ToInt32(row.Cells["Id_ТС"].Value);
+            string brand = row.Cells["Марка"].Value.ToString();
+            string model = row.Cells["Модель"].Value.ToString();
+            string color = row.Cells["Цвет"].Value.ToString();
+            string plate = row.Cells["Гос_номер"].Value.ToString();
+            short year = Convert.ToInt16(row.Cells["Год_Выпуска"].Value);
+
+            // Можно получить данные владельца, если они есть в таблице (или через JOIN в хранимой процедуре)
+            string ownerPassport = row.Cells["ПаспортВладельца"].Value.ToString(); // пример
+            string ownerName = row.Cells["ФиоВладельца"].Value.ToString(); // пример
+
+            // Создаем форму редактирования ТС и передаем данные
+            UpdateTs updateForm = new UpdateTs
+            {
+                IdТС = idTs, // нужно добавить свойство IdТС в форме UpdateTs
+                carBrandText = brand,
+                carModelText = model,
+                carColorText = color,
+                carPlateText = plate,
+                carYearText = year.ToString(),
+                passportOwnerText = ownerPassport,
+                passOwnerText = ownerName
+            };
+
+            updateForm.ShowDialog(); // открываем как модальное окно
         }
 
         private void LoadComboBoxes()
