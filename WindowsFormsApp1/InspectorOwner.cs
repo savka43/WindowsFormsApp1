@@ -21,6 +21,7 @@ namespace WindowsFormsApp1
             InitializeComponent();
             SearchButton.Click += SearchButton_Click;
             ResetButton.Click += ResetButton_Click;
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
         }
 
         private void InspectorOwner_Load(object sender, EventArgs e)
@@ -141,6 +142,21 @@ namespace WindowsFormsApp1
         {
             NewOwner newOwnerForm = new NewOwner();
             newOwnerForm.Show();
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                UpdateOwner updateForm = new UpdateOwner
+                {
+                    OwnerFIO = row.Cells["ФИО"].Value.ToString(),
+                    OwnerPassport = row.Cells["Паспорт"].Value.ToString(),
+                    OwnerBirthDate = Convert.ToDateTime(row.Cells["Дата_рождения"].Value)
+                };
+                updateForm.ShowDialog();
+            }
         }
     }
 }

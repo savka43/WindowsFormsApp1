@@ -211,6 +211,12 @@
     <Compile Include="TsInspector.Designer.cs">
       <DependentUpon>TsInspector.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpdateOwner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateOwner.Designer.cs">
+      <DependentUpon>UpdateOwner.cs</DependentUpon>
+    </Compile>
     <Compile Include="UpdateTs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -304,6 +310,9 @@
     </Compile>
     <EmbeddedResource Include="TsInspector.resx">
       <DependentUpon>TsInspector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateOwner.resx">
+      <DependentUpon>UpdateOwner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateTs.resx">
       <DependentUpon>UpdateTs.cs</DependentUpon>
