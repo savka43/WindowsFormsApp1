@@ -118,30 +118,34 @@ namespace WindowsFormsApp1
         {
             if (e.RowIndex < 0) return;
 
-            try
-            {
-                // Берём ID из таблицы (предполагается, что колонка называется Id_Доверенности)
-                int id = Convert.ToInt32(
-                    dataGridView1.Rows[e.RowIndex].Cells["Id_Доверенности"].Value
-                );
+            // Берём ID доверенности из таблицы (колонка "Id_Доверенности")
+            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id_Доверенности"].Value);
 
-                var res = MessageBox.Show(
-                    $"Удалить доверенность № {id}?",
-                    "Подтверждение удаления",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning
-                );
+            var res = MessageBox.Show(
+                $"Удалить доверенность № {id}?",
+                "Подтверждение удаления",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
 
-                if (res == DialogResult.Yes)
-                {
-                    DeleteDoverennost(id);
-                    MessageBox.Show("Доверенность удалена.", "Успех");
-                    LoadDoverennosti(); // обновляем таблицу
-                }
-            }
-            catch (Exception ex)
+            if (res == DialogResult.Yes)
             {
-                MessageBox.Show("Ошибка: " + ex.Message, "Ошибка");
+                // Удаляем доверенность через процедуру
+                DataBase db = new DataBase();
+                db.openConnection();
+
+                SqlCommand cmd = new SqlCommand("УдалитьДоверенность", db.getConnection());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id_Доверенности", id);
+
+                cmd.ExecuteNonQuery();
+                db.closeConnection();
+
+                // Сообщение о успешном удалении
+                MessageBox.Show("Доверенность успешно удалена");
+
+                // Обновляем таблицу
+                LoadDoverennosti();
             }
         }
 
