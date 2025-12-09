@@ -8,16 +8,17 @@ namespace WindowsFormsApp1
     public partial class DriverTSForm : Form
     {
         private DataBase db = new DataBase(); // подключение к БД
-
-        public DriverTSForm()
+        private int driverid;
+        public DriverTSForm(int id)
         {
             InitializeComponent();
+            driverid = id;
         }
 
         private void DriverTSForm_Load(object sender, EventArgs e)
         {
             // Загружаем данные при открытии формы
-            LoadCarInfo(102); // айди водителя Иванова
+            LoadCarInfo(driverid); // айди водителя Иванова
         }
 
         private void LoadCarInfo(int driverId)
@@ -47,7 +48,7 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DriverMainForm driverForm = new DriverMainForm();
+            DriverMainForm driverForm = new DriverMainForm(driverid);
             driverForm.Show();
             this.Hide();
         }

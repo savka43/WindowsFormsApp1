@@ -14,15 +14,18 @@ namespace WindowsFormsApp1
     public partial class DriverFinesForm : Form
     {
         private DataBase db = new DataBase();
-        public DriverFinesForm()
+
+        private int driverId;
+        public DriverFinesForm(int id)
         {
             InitializeComponent();
             radioButton3.Checked = true;
+            driverId = id;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DriverMainForm driverform = new DriverMainForm();
+            DriverMainForm driverform = new DriverMainForm(driverId);
             driverform.Show();
             this.Hide();
         }
@@ -67,7 +70,7 @@ namespace WindowsFormsApp1
             command.CommandType = CommandType.StoredProcedure;
 
             
-            command.Parameters.AddWithValue("@Id_Водителя", 102); 
+            command.Parameters.AddWithValue("@Id_Водителя", driverId); 
             command.Parameters.AddWithValue("@Статус", status);
 
        

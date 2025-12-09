@@ -68,7 +68,6 @@ namespace WindowsFormsApp1
 
             SqlCommand cmd = new SqlCommand("ЛогинПользователя", db.getConnection());
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.AddWithValue("@Role", role);
             cmd.Parameters.AddWithValue("@InputValue", value);
 
@@ -76,14 +75,18 @@ namespace WindowsFormsApp1
 
             if (reader.Read() && reader["Result"].ToString() == "OK")
             {
-                int id = Convert.ToInt32(reader["UserId"]);
+                // Сначала читаем необходимые данные
+                int userId = Convert.ToInt32(reader["UserId"]);
+
+                // Закрываем reader и соединение
+                reader.Close();
                 db.closeConnection();
 
                 // Открываем нужную форму
                 switch (role)
                 {
                     case "Driver":
-                        DriverMainForm driver = new DriverMainForm();
+                        DriverMainForm driver = new DriverMainForm(userId);
                         driver.Show();
                         break;
 
@@ -102,8 +105,10 @@ namespace WindowsFormsApp1
                 return;
             }
 
+            // Если данные не найдены
+            reader.Close();
             db.closeConnection();
-            MessageBox.Show("Данные не найдены!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Пользователь с таким номером не найден. Проверьте ввод и попробуйте снова.", "Ошибка входа", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void driverButton_Click(object sender, EventArgs e)

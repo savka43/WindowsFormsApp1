@@ -7,16 +7,18 @@ namespace WindowsFormsApp1
 {
     public partial class DoverieForm : Form
     {
-        DataBase database = new DataBase();
 
-        public DoverieForm()
+        DataBase database = new DataBase();
+        private int driverid;
+        public DoverieForm(int id)
         {
             InitializeComponent();
+            driverid = id;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DriverMainForm driverForm = new DriverMainForm();
+            DriverMainForm driverForm = new DriverMainForm(driverid);
             driverForm.Show();
             this.Hide();
         }
@@ -30,7 +32,7 @@ namespace WindowsFormsApp1
         {
             SqlCommand command = new SqlCommand("ПолучитьДоверенностиВодителя", database.getConnection());
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@Id_Водителя", 102); // конкретный водитель
+            command.Parameters.AddWithValue("@Id_Водителя", driverid); // конкретный водитель
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             DataTable table = new DataTable();
