@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxFio = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -40,16 +40,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // textBoxFio
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(314, 99);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(558, 91);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Кириллов А.С";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.textBoxFio.AutoSize = true;
+            this.textBoxFio.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxFio.Location = new System.Drawing.Point(314, 99);
+            this.textBoxFio.Name = "textBoxFio";
+            this.textBoxFio.Size = new System.Drawing.Size(558, 91);
+            this.textBoxFio.TabIndex = 2;
+            this.textBoxFio.Text = "Кириллов А.С";
+            this.textBoxFio.Click += new System.EventHandler(this.label1_Click);
             // 
             // button1
             // 
@@ -122,7 +122,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxFio);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Name = "OwnerForm";
@@ -141,7 +141,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label textBoxFio;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;

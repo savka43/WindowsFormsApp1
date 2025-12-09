@@ -15,10 +15,11 @@ namespace WindowsFormsApp1
     public partial class DobavlenieDoverennosti : Form
     {
         DataBase dataBase = new DataBase();
-
-        public DobavlenieDoverennosti()
+        private int ownerId;
+        public DobavlenieDoverennosti(int id)
         {
             InitializeComponent();
+            ownerId = id;
         }
 
         private void DobavlenieDoverennosti_Load(object sender, EventArgs e)
@@ -74,7 +75,7 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            OwnerDoverie ownerDoverie = new OwnerDoverie();
+            OwnerDoverie ownerDoverie = new OwnerDoverie(ownerId);
             ownerDoverie.Show();
             this.Hide();
         }

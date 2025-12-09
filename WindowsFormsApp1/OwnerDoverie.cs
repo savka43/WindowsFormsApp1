@@ -14,11 +14,11 @@ namespace WindowsFormsApp1
     public partial class OwnerDoverie : Form
     {
         DataBase dataBase = new DataBase();
-        private int currentDriverId = 101;
-
-        public OwnerDoverie()
+        private int ownerId;
+        public OwnerDoverie(int id)
         {
             InitializeComponent();
+            ownerId = id;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -28,7 +28,7 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OwnerForm ownerForm = new OwnerForm();
+            OwnerForm ownerForm = new OwnerForm(ownerId);
             ownerForm.Show();
             this.Hide();
         }
@@ -48,7 +48,7 @@ namespace WindowsFormsApp1
                 command.CommandType = CommandType.StoredProcedure;
 
               
-                command.Parameters.Add("@Id_Владельца", SqlDbType.Int).Value = currentDriverId; 
+                command.Parameters.Add("@Id_Владельца", SqlDbType.Int).Value = ownerId; 
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
@@ -63,7 +63,7 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DobavlenieDoverennosti dobavlenieDoverennosti = new DobavlenieDoverennosti();
+            DobavlenieDoverennosti dobavlenieDoverennosti = new DobavlenieDoverennosti(ownerId);
             dobavlenieDoverennosti.Show();
             this.Hide();
         }

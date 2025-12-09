@@ -14,10 +14,11 @@ namespace WindowsFormsApp1
     public partial class OwnerTS : Form
     {
         private DataBase db = new DataBase(); 
-
-        public OwnerTS()
+        private int ownerId;
+        public OwnerTS(int id)
         {
             InitializeComponent();
+            ownerId = id;
         }
 
         private void OwnerTS_Load(object sender, EventArgs e)
@@ -53,7 +54,7 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OwnerForm ownerForm = new OwnerForm();
+            OwnerForm ownerForm = new OwnerForm(ownerId);
             ownerForm.Show();
             this.Hide();
         }

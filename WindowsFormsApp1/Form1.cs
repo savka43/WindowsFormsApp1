@@ -91,7 +91,7 @@ namespace WindowsFormsApp1
                         break;
 
                     case "Owner":
-                        OwnerForm owner = new OwnerForm();
+                        OwnerForm owner = new OwnerForm(userId);
                         owner.Show();
                         break;
 

@@ -14,16 +14,17 @@ namespace WindowsFormsApp1
     public partial class OwnerFines : Form
     {
         private DataBase db = new DataBase();
-
-        public OwnerFines()
+        private int ownerId;
+        public OwnerFines(int id)
         {
             InitializeComponent();
             radioButton3.Checked = true;
+            ownerId = id;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            OwnerForm ownerForm = new OwnerForm();
+            OwnerForm ownerForm = new OwnerForm(ownerId);
             ownerForm.Show();
             this.Hide();
         }
@@ -64,7 +65,7 @@ namespace WindowsFormsApp1
                 command.CommandType = CommandType.StoredProcedure;
 
                
-                command.Parameters.AddWithValue("@Id_ТС", 101); 
+                command.Parameters.AddWithValue("@Id_ТС", ownerId); 
                 command.Parameters.AddWithValue("@Статус", status);
 
                 
@@ -90,7 +91,7 @@ namespace WindowsFormsApp1
 
         private void OwnerFines_Load_1(object sender, EventArgs e)
         {
-
+            LoadFines("Все");
         }
 
         private void label1_Click(object sender, EventArgs e)
