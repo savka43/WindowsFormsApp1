@@ -89,21 +89,20 @@ namespace WindowsFormsApp1
             SqlCommand cmd = new SqlCommand("ОбновитьТС", db.getConnection());
             cmd.CommandType = CommandType.StoredProcedure;
 
-            // ID ТС
             cmd.Parameters.AddWithValue("@Id_ТС", IdТС);
 
-            // Строковые поля — передаём либо текст, либо NULL
+            // Строковые поля — передаём либо текст, либо DBNull
             cmd.Parameters.Add("@Марка", SqlDbType.VarChar, 50).Value =
-                carBrand.Text.Trim().Length == 0 ? (object)DBNull.Value : carBrand.Text.Trim();
+                string.IsNullOrWhiteSpace(carBrand.Text) ? (object)DBNull.Value : carBrand.Text.Trim();
 
             cmd.Parameters.Add("@Модель", SqlDbType.VarChar, 50).Value =
-                carModel.Text.Trim().Length == 0 ? (object)DBNull.Value : carModel.Text.Trim();
+                string.IsNullOrWhiteSpace(carModel.Text) ? (object)DBNull.Value : carModel.Text.Trim();
 
             cmd.Parameters.Add("@Цвет", SqlDbType.VarChar, 30).Value =
-                carColor.Text.Trim().Length == 0 ? (object)DBNull.Value : carColor.Text.Trim();
+                string.IsNullOrWhiteSpace(carColor.Text) ? (object)DBNull.Value : carColor.Text.Trim();
 
             cmd.Parameters.Add("@Гос_номер", SqlDbType.VarChar, 15).Value =
-                carPlate.Text.Trim().Length == 0 ? (object)DBNull.Value : carPlate.Text.Trim();
+                string.IsNullOrWhiteSpace(carPlate.Text) ? (object)DBNull.Value : carPlate.Text.Trim();
 
             // Год выпуска
             if (short.TryParse(carYear.Text.Trim(), out short year))
@@ -111,39 +110,24 @@ namespace WindowsFormsApp1
             else
                 cmd.Parameters.AddWithValue("@Год_Выпуска", DBNull.Value);
 
-            // Паспорт владельца — ВСЕГДА строка, не int
-            cmd.Parameters.Add("@ПаспортВладельца", SqlDbType.VarChar, 20).Value =
-                passportOwner.Text.Trim().Length == 0 ? (object)DBNull.Value : passportOwner.Text.Trim();
+            // Паспорт владельца
+            cmd.Parameters.Add("@ПаспортВладельца", SqlDbType.Char, 10).Value =
+                string.IsNullOrWhiteSpace(passportOwner.Text) ? (object)DBNull.Value : passportOwner.Text.Trim();
 
-            // -------------------------
-            // Считываем PRINT из SQL
-            // -------------------------
-            cmd.ExecuteNonQuery();
-
-            SqlCommand msgCmd = new SqlCommand("SELECT @@ROWCOUNT", db.getConnection());
-            // Важно: вызвать reader для получения PRINT
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                // SQL может вернуть PRINT — показываем его пользователю
-                if (!reader.IsDBNull(0))
-                {
-                    string message = reader.GetString(0);
-                    if (!string.IsNullOrWhiteSpace(message))
-                    {
-                        MessageBox.Show(message, "Сообщение SQL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        reader.Close();
-                        db.closeConnection();
-                        return;
-                    }
-                }
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Данные ТС успешно обновлены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            reader.Close();
-
-            db.closeConnection();
-            MessageBox.Show("Данные ТС успешно обновлены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
+            catch (SqlException ex)
+            {
+                // Выводим сообщение из RAISERROR
+                MessageBox.Show(ex.Message, "Ошибка SQL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
         }
     }
 }

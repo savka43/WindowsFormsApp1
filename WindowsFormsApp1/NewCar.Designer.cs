@@ -159,6 +159,7 @@
             this.addAuto.TabIndex = 14;
             this.addAuto.Text = "ДобавитьТС";
             this.addAuto.UseVisualStyleBackColor = true;
+            this.addAuto.Click += new System.EventHandler(this.addAuto_Click_1);
             // 
             // carPlate
             // 

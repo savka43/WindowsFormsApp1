@@ -19,15 +19,20 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             addAuto.Click += addAuto_Click;
+
         }
 
         private void NewCar_Load(object sender, EventArgs e)
         {
         }
 
+        private void addAuto_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+
         private void addAuto_Click(object sender, EventArgs e)
         {
-
             if (!int.TryParse(carYear.Text.Trim(), out int year))
             {
                 MessageBox.Show("Введите корректный год выпуска!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -45,17 +50,30 @@ namespace WindowsFormsApp1
             addCar.Parameters.AddWithValue("@Цвет", textBox4.Text.Trim());
             addCar.Parameters.AddWithValue("@Гос_номер", carPlate.Text.Trim());
             addCar.Parameters.AddWithValue("@Дата_Регистрации", dateRegistration.Value.Date);
-            addCar.Parameters.AddWithValue("@Год_Выпуска", year); 
+            addCar.Parameters.AddWithValue("@Год_Выпуска", year);
 
-            SqlDataReader reader = addCar.ExecuteReader();
-
-            if (reader.Read())
+            try
             {
-                MessageBox.Show($"ТС добавлено успешно! Id: {reader["Id_Созданного_ТС"]}");
+                using (SqlDataReader reader = addCar.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        MessageBox.Show($"ТС добавлено успешно! Id: {reader["Id_Созданного_ТС"]}",
+                                        "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
-
-            reader.Close();
-            db.closeConnection();
+            catch (SqlException ex)
+            {
+                // Выводим сообщение из RAISERROR
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
         }
+
+
     }
 }
