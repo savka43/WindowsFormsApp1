@@ -102,24 +102,27 @@ namespace WindowsFormsApp1
             cmd.Parameters.AddWithValue("@Дата_рождения", birthDate.Value.Date);
             cmd.Parameters.AddWithValue("@Номер_BY", numberDriverLicense.Text.Trim());
             cmd.Parameters.AddWithValue("@Дата_Выдачи", startDate.Value.Date);
-            cmd.Parameters.AddWithValue("@Дата_Окончания", startDate.Value.Date.AddYears(10)); // дата окончания через 10 лет
+            cmd.Parameters.AddWithValue("@Дата_Окончания", startDate.Value.Date.AddYears(10));
             cmd.Parameters.AddWithValue("@Категория", categoryLicense.SelectedItem.ToString());
 
-            SqlParameter returnParam = new SqlParameter("@ReturnVal", SqlDbType.Int)
+            try
             {
-                Direction = ParameterDirection.ReturnValue
-            };
-            cmd.Parameters.Add(returnParam);
+                cmd.ExecuteNonQuery(); // Выполняем процедуру
+                MessageBox.Show("Водитель успешно добавлен.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException ex)
+            {
+                // Выводим сообщение из RAISERROR
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
 
-            cmd.ExecuteNonQuery(); // выполняем процедуру
 
-            MessageBox.Show("Водитель успешно добавлен.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            db.closeConnection();
-
-            this.Close(); // закрываем форму
         }
 
-     
+
     }
 }
