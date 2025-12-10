@@ -15,10 +15,11 @@ namespace WindowsFormsApp1
     public partial class InspectorDTP : Form
     {
         DataBase db = new DataBase(); // Создаём экземпляр твоего класса для работы с БД
-
-        public InspectorDTP()
+        private int inspectorId;
+        public InspectorDTP(int id)
         {
             InitializeComponent();
+            inspectorId = id;
 
             // Событие нажатия Enter в TextBox
             textBox1.KeyDown += TextBox1_KeyDown;
@@ -76,14 +77,14 @@ namespace WindowsFormsApp1
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            InspectorMainForm frm = new InspectorMainForm();
+            InspectorMainForm frm = new InspectorMainForm(inspectorId);
             frm.Show();
             this.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-           NewDTP newDTP = new NewDTP();
+           NewDTP newDTP = new NewDTP(inspectorId);
            newDTP.Show();
         }
 

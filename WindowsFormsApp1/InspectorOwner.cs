@@ -15,10 +15,13 @@ namespace WindowsFormsApp1
     public partial class InspectorOwner : Form
     {
         DataBase db = new DataBase();
-
-        public InspectorOwner()
+        private int inspectorId;
+        public InspectorOwner(int id)
         {
             InitializeComponent();
+
+            inspectorId = id;
+
             SearchButton.Click += SearchButton_Click;
             ResetButton.Click += ResetButton_Click;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
@@ -133,7 +136,7 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            InspectorMainForm inspectorMainForm = new InspectorMainForm();
+            InspectorMainForm inspectorMainForm = new InspectorMainForm(inspectorId);
             inspectorMainForm.Show();
             this.Hide();
         }

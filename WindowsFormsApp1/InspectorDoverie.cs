@@ -13,13 +13,16 @@ namespace WindowsFormsApp1
 {
     public partial class InspectorDoverie : Form
     {
-        public InspectorDoverie()
+        private int inspectorId;
+        public InspectorDoverie(int id)
         {
             InitializeComponent();
 
             LoadDoverennosti();
             LoadMarks();
             LoadStatus();
+
+            inspectorId = id;
 
             dateStart.Checked = false;
             dateEnd.Checked = false;
@@ -226,7 +229,7 @@ namespace WindowsFormsApp1
 
         private void Backbutton_Click(object sender, EventArgs e)
         {
-            InspectorMainForm frm = new InspectorMainForm();
+            InspectorMainForm frm = new InspectorMainForm(inspectorId);
             frm.Show();
             this.Close();
         }

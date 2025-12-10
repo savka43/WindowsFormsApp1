@@ -14,10 +14,11 @@ namespace WindowsFormsApp1
     public partial class InspectorCars : Form
     {
         private DataBase db = new DataBase();
-
-        public InspectorCars()
+        private int inspectorId;
+        public InspectorCars(int id)
         {
             InitializeComponent();
+            inspectorId = id;
         }
 
         private void InspectorCars_Load(object sender, EventArgs e)
@@ -72,7 +73,7 @@ namespace WindowsFormsApp1
         {
             db.openConnection();
 
-            // Марки
+          
             SqlCommand cmdBrand = new SqlCommand("SELECT DISTINCT Марка FROM ТС", db.getConnection());
             SqlDataAdapter daBrand = new SqlDataAdapter(cmdBrand);
             DataTable dtBrand = new DataTable();
@@ -82,7 +83,7 @@ namespace WindowsFormsApp1
                 carBrand.Items.Add(row["Марка"].ToString());
 
 
-            // Цвета
+    
             SqlCommand cmdColor = new SqlCommand("SELECT DISTINCT Цвет FROM ТС", db.getConnection());
             SqlDataAdapter daColor = new SqlDataAdapter(cmdColor);
             DataTable dtColor = new DataTable();
@@ -149,7 +150,7 @@ namespace WindowsFormsApp1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            InspectorMainForm f = new InspectorMainForm();
+            InspectorMainForm f = new InspectorMainForm(inspectorId);
             f.Show();
             this.Hide();
         }

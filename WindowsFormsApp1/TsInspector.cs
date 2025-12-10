@@ -14,9 +14,12 @@ namespace WindowsFormsApp1
     public partial class TsInspector : Form
     {
         DataBase db = new DataBase();
-        public TsInspector()
+        private int inspectorId;
+        public TsInspector(int id)
         {
             InitializeComponent();
+            
+            inspectorId = id;
 
             dateTimePicker1.Checked = false;
             dateTimePicker2.Checked = false;
@@ -24,7 +27,7 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            InspectorMainForm frm = new InspectorMainForm();
+            InspectorMainForm frm = new InspectorMainForm(inspectorId);
             frm.Show();
             this.Hide();
         }

@@ -14,10 +14,11 @@ namespace WindowsFormsApp1
     public partial class NewDTP : Form
     {
         DataBase db = new DataBase();
-
-        public NewDTP()
+        private int inspectorId;
+        public NewDTP(int id)
         {
             InitializeComponent();
+            inspectorId = id;
 
             // Настройка DateTimePicker для выбора даты и времени
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
@@ -38,7 +39,6 @@ namespace WindowsFormsApp1
             DateTime dtpDateTime = dateTimePicker1.Value;
 
             // Айди инспектора пока фиксированный
-            int inspectorId = 1;
 
             string resultMessage = AddDTPProcedure(inspectorId, adress.Text.Trim(), dtpDateTime);
 
@@ -75,6 +75,11 @@ namespace WindowsFormsApp1
         private void label2_Click(object sender, EventArgs e)
         {
             // Можно оставить пустым, т.к. клики на label обычно не нужны
+        }
+
+        private void NewDTP_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

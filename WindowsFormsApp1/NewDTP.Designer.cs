@@ -105,6 +105,7 @@
             this.Name = "NewDTP";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NewDTP";
+            this.Load += new System.EventHandler(this.NewDTP_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -96,7 +96,7 @@ namespace WindowsFormsApp1
                         break;
 
                     case "Inspector":
-                        InspectorMainForm inspector = new InspectorMainForm();
+                        InspectorMainForm inspector = new InspectorMainForm(userId);
                         inspector.Show();
                         break;
                 }

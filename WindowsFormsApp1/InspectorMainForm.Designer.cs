@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxJob = new System.Windows.Forms.Label();
+            this.textBoxFio = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -42,25 +42,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // textBoxJob
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(289, 53);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(328, 38);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Младший инспектор";
+            this.textBoxJob.AutoSize = true;
+            this.textBoxJob.Font = new System.Drawing.Font("Microsoft Sans Serif", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxJob.Location = new System.Drawing.Point(289, 53);
+            this.textBoxJob.Name = "textBoxJob";
+            this.textBoxJob.Size = new System.Drawing.Size(328, 38);
+            this.textBoxJob.TabIndex = 1;
+            this.textBoxJob.Text = "Младший инспектор";
             // 
-            // label2
+            // textBoxFio
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(289, 126);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(206, 38);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Иванов И.И.";
+            this.textBoxFio.AutoSize = true;
+            this.textBoxFio.Font = new System.Drawing.Font("Microsoft Sans Serif", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBoxFio.Location = new System.Drawing.Point(289, 126);
+            this.textBoxFio.Name = "textBoxFio";
+            this.textBoxFio.Size = new System.Drawing.Size(206, 38);
+            this.textBoxFio.TabIndex = 2;
+            this.textBoxFio.Text = "Иванов И.И.";
             // 
             // button1
             // 
@@ -161,12 +161,13 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxFio);
+            this.Controls.Add(this.textBoxJob);
             this.Controls.Add(this.pictureBox1);
             this.Name = "InspectorMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Меню Инспектора ";
+            this.Load += new System.EventHandler(this.InspectorMainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -177,8 +178,8 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label textBoxJob;
+        private System.Windows.Forms.Label textBoxFio;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button button3;
