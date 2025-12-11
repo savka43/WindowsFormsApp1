@@ -16,6 +16,7 @@ namespace WindowsFormsApp1
     {
         DataBase db = new DataBase();
         private int inspectorId;
+        public int OwnerId { get; set; }
         public InspectorOwner(int id)
         {
             InitializeComponent();
@@ -152,12 +153,15 @@ namespace WindowsFormsApp1
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
                 UpdateOwner updateForm = new UpdateOwner
                 {
+                    OwnerId = Convert.ToInt32(row.Cells["Id_Владельца"].Value),    // ← ВАЖНО!
                     OwnerFIO = row.Cells["ФИО"].Value.ToString(),
                     OwnerPassport = row.Cells["Паспорт"].Value.ToString(),
                     OwnerBirthDate = Convert.ToDateTime(row.Cells["Дата_рождения"].Value)
                 };
+
                 updateForm.ShowDialog();
             }
         }

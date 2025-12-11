@@ -48,50 +48,37 @@ namespace WindowsFormsApp1
 
             if (Passport.Text.Length != 10 || !Passport.Text.All(char.IsDigit))
             {
-                MessageBox.Show("Паспорт должен содержать ровно 10 цифр!",
-                                "Ошибка",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                MessageBox.Show("Паспорт должен содержать ровно 10 цифр!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string resultMessage = AddOwnerProcedure(
-                FIO.Text.Trim(),
-                Birthdate.Value,
-                Passport.Text.Trim()
-            );
-
-
-            MessageBox.Show(resultMessage, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private string AddOwnerProcedure(string fio, DateTime birthDate, string passport)
-        {
-            string result = "";
-
-            using (SqlCommand cmd = new SqlCommand("ДобавитьВладельца", db.getConnection()))
+            try
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@FIO", fio);
-                cmd.Parameters.AddWithValue("@BirthDate", birthDate);
-                cmd.Parameters.AddWithValue("@Passport", passport);
-
-            
-                SqlParameter output = new SqlParameter("@ResultMessage", SqlDbType.NVarChar, 200)
+                using (SqlCommand cmd = new SqlCommand("ДобавитьВладельца", db.getConnection()))
                 {
-                    Direction = ParameterDirection.Output
-                };
-                cmd.Parameters.Add(output);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                db.openConnection();
-                cmd.ExecuteNonQuery();
-                result = output.Value.ToString();
+                    cmd.Parameters.AddWithValue("@FIO", FIO.Text.Trim());
+                    cmd.Parameters.AddWithValue("@BirthDate", Birthdate.Value);
+                    cmd.Parameters.AddWithValue("@Passport", Passport.Text.Trim());
+
+                    db.openConnection();
+                    cmd.ExecuteNonQuery();
+                    db.closeConnection();
+                }
+
+                MessageBox.Show("Владелец успешно добавлен.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException ex)
+            {
+                // Сообщение из RAISERROR
+                MessageBox.Show(ex.Message, "Ошибка SQL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 db.closeConnection();
             }
-
-            return result;
         }
+
+
+       
 
         private void NewOwner_Load(object sender, EventArgs e)
         {

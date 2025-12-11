@@ -12,6 +12,8 @@ namespace WindowsFormsApp1
         // Свойства для передачи данных из InspectorOwner
         public string OwnerFIO { get; set; }
         public string OwnerPassport { get; set; }
+
+        public int OwnerId { get; set; }
         public DateTime OwnerBirthDate { get; set; }
 
         public UpdateOwner()
@@ -29,39 +31,44 @@ namespace WindowsFormsApp1
 
         private void updateBtn_Click(object sender, EventArgs e)
         {
-            db.openConnection();
-
-            // Подписка на вывод PRINT из SQL как сообщения для пользователя
-            db.getConnection().InfoMessage += (s, ev) =>
+            try
             {
-                foreach (SqlError err in ev.Errors)
-                {
-                    MessageBox.Show(err.Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            };
+                db.openConnection();
 
-            SqlCommand cmd = new SqlCommand("ОбновитьВладельца", db.getConnection());
-            cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("ОбновитьВладельца", db.getConnection());
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Паспорт", passporNUmber.Text.Trim());
-            cmd.Parameters.AddWithValue("@ФИО", textFio.Text.Trim());
-            cmd.Parameters.AddWithValue("@Дата_рождения", birthDate.Value.Date);
+                cmd.Parameters.AddWithValue("@Id_Владельца", OwnerId);
+                cmd.Parameters.AddWithValue("@Паспорт", passporNUmber.Text.Trim());
+                cmd.Parameters.AddWithValue("@ФИО", textFio.Text.Trim());
+                cmd.Parameters.AddWithValue("@Дата_рождения", birthDate.Value.Date);
 
-            cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
 
-            MessageBox.Show("Данные владельца успешно обновлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            db.closeConnection();
-            this.Close();
+                MessageBox.Show("Данные владельца успешно обновлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка SQL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
-       "Вы действительно хотите удалить этого владельца?",
-       "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                "Вы действительно хотите удалить этого владельца?",
+                "Подтверждение",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
 
-            if (result == DialogResult.Yes)
+            if (result != DialogResult.Yes)
+                return;
+
+            try
             {
                 db.openConnection();
 
@@ -69,13 +76,20 @@ namespace WindowsFormsApp1
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Паспорт", passporNUmber.Text.Trim());
 
-                // Здесь ExecuteScalar получает строку с сообщением об успешном удалении
-                string message = (string)cmd.ExecuteScalar();
+                cmd.ExecuteNonQuery();
 
-                MessageBox.Show(message, "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                db.closeConnection();
+                // Если до сюда дошли без исключений → удаление реально прошло
+                MessageBox.Show("Владелец успешно удалён", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
+            }
+            catch (SqlException ex)
+            {
+                // Любой RAISERROR попадёт сюда
+                MessageBox.Show(ex.Message, "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                db.closeConnection();
             }
         }
 
