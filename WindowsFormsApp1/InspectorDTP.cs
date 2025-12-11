@@ -23,6 +23,7 @@ namespace WindowsFormsApp1
 
             // Событие нажатия Enter в TextBox
             textBox1.KeyDown += TextBox1_KeyDown;
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
         }
 
         private void TextBox1_KeyDown(object sender, KeyEventArgs e)
@@ -93,5 +94,60 @@ namespace WindowsFormsApp1
             NewParticipant newParticipant = new NewParticipant();
             newParticipant.Show();
         }
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Проверка, что кликнули по строке, а не по заголовку
+            if (e.RowIndex < 0) return;
+
+            // Берем Id участника ДТП из строки (предположим, колонка называется "Id_Участник_ДТП")
+            int selectedParticipantId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id_Участник_ДТП"].Value);
+
+            // Первый диалог подтверждения
+            if (MessageBox.Show("Вы действительно хотите удалить этого участника ДТП?",
+                "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
+            // Второй диалог подтверждения
+            if (MessageBox.Show("Вы уверены, что хотите окончательно удалить этого участника ДТП?",
+                "Подтверждение удаления", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
+            try
+            {
+                db.openConnection();
+
+                SqlCommand cmd = new SqlCommand("УдалитьУчастникаДТП", db.getConnection());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id_Участник_ДТП", selectedParticipantId);
+
+                // Подписка на InfoMessage для RAISERROR
+                db.getConnection().InfoMessage += (s, ev) =>
+                {
+                    MessageBox.Show(ev.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                };
+
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Участник ДТП успешно удален.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Удаляем строку из DataGridView
+                dataGridView1.Rows.RemoveAt(e.RowIndex);
+            }
+            catch (SqlException ex)
+            {
+                string userMessage = "Произошла ошибка при удалении участника ДТП.";
+
+                if (ex.Message.Contains("не найден"))
+                    userMessage = "Участник ДТП не найден.";
+
+                MessageBox.Show(userMessage, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
+        }
+
+
     }
 }
