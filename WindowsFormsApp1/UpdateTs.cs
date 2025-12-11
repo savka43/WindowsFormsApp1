@@ -46,26 +46,48 @@ namespace WindowsFormsApp1
         // Кнопка удаления ТС
         private void deleteButton_Click_1(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Вы действительно хотите удалить это ТС?",
-        "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Вы действительно хотите снять это ТС с учета?",
+                "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
+            try
             {
                 db.openConnection();
 
-                db.getConnection().InfoMessage += (s, ev) =>
-                {
-                    MessageBox.Show(ev.Message, "Сообщение SQL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                };
-
-                SqlCommand cmd = new SqlCommand("УдалитьТС", db.getConnection());
+                SqlCommand cmd = new SqlCommand("СнятьТССУчета", db.getConnection());
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id_ТС", IdТС);
 
+                // Подписываемся на InfoMessage для RAISERROR с уровнем <= 10 (информационные)
+                db.getConnection().InfoMessage += (s, ev) =>
+                {
+                    MessageBox.Show(ev.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                };
+
                 cmd.ExecuteNonQuery();
 
-                db.closeConnection();
-
+                // Если процедура вернула SELECT с сообщением
+                SqlCommand cmdResult = new SqlCommand("SELECT 'Машина успешно снята с учета.' AS ResultMessage", db.getConnection());
+                var result = cmdResult.ExecuteScalar();
+                MessageBox.Show(result.ToString(), "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.Close();
+            }
+            catch (SqlException ex)
+            {
+                // RAISERROR с уровнем >= 11 попадает сюда
+                string userMessage = "Произошла ошибка при снятии машины с учета.";
+
+                if (ex.Message.Contains("участвовала в ДТП"))
+                    userMessage = "Невозможно снять с учета машину: она участвовала в ДТП.";
+                else if (ex.Message.Contains("неоплаченные штрафы"))
+                    userMessage = "Невозможно снять с учета машину: есть неоплаченные штрафы.";
+
+                MessageBox.Show(userMessage, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                db.closeConnection();
             }
         }
 
