@@ -93,7 +93,7 @@ namespace WindowsFormsApp1
             );
 
             cmdInsert.Parameters.AddWithValue("@Id_Штрафа", newFineId);
-            cmdInsert.Parameters.AddWithValue("@Id_ТС", idTC);   // ← русские Т и С
+            cmdInsert.Parameters.AddWithValue("@Id_ТС", idTC);   
             cmdInsert.Parameters.AddWithValue("@Вид_штрафа", fineType.SelectedItem.ToString());
             cmdInsert.Parameters.AddWithValue("@Сумма", amountValue);
             cmdInsert.Parameters.AddWithValue("@Дата_постановления", DateTime.Now);

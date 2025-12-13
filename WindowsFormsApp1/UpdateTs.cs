@@ -43,7 +43,7 @@ namespace WindowsFormsApp1
         }
 
 
-        // Кнопка удаления ТС
+  
         private void deleteButton_Click_1(object sender, EventArgs e)
         {
             if (MessageBox.Show("Вы действительно хотите снять это ТС с учета?",
@@ -58,7 +58,7 @@ namespace WindowsFormsApp1
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id_ТС", IdТС);
 
-                // Подписываемся на InfoMessage для RAISERROR с уровнем <= 10 (информационные)
+                
                 db.getConnection().InfoMessage += (s, ev) =>
                 {
                     MessageBox.Show(ev.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -66,7 +66,6 @@ namespace WindowsFormsApp1
 
                 cmd.ExecuteNonQuery();
 
-                // Если процедура вернула SELECT с сообщением
                 SqlCommand cmdResult = new SqlCommand("SELECT 'Машина успешно снята с учета.' AS ResultMessage", db.getConnection());
                 var result = cmdResult.ExecuteScalar();
                 MessageBox.Show(result.ToString(), "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -75,7 +74,7 @@ namespace WindowsFormsApp1
             }
             catch (SqlException ex)
             {
-                // RAISERROR с уровнем >= 11 попадает сюда
+               
                 string userMessage = "Произошла ошибка при снятии машины с учета.";
 
                 if (ex.Message.Contains("участвовала в ДТП"))
@@ -113,7 +112,7 @@ namespace WindowsFormsApp1
 
             cmd.Parameters.AddWithValue("@Id_ТС", IdТС);
 
-            // Строковые поля — передаём либо текст, либо DBNull
+         
             cmd.Parameters.Add("@Марка", SqlDbType.VarChar, 50).Value =
                 string.IsNullOrWhiteSpace(carBrand.Text) ? (object)DBNull.Value : carBrand.Text.Trim();
 
@@ -126,7 +125,7 @@ namespace WindowsFormsApp1
             cmd.Parameters.Add("@Гос_номер", SqlDbType.VarChar, 15).Value =
                 string.IsNullOrWhiteSpace(carPlate.Text) ? (object)DBNull.Value : carPlate.Text.Trim();
 
-            // Год выпуска
+       
             if (short.TryParse(carYear.Text.Trim(), out short year))
                 cmd.Parameters.AddWithValue("@Год_Выпуска", year);
             else
