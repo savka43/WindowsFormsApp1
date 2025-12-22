@@ -57,7 +57,7 @@ namespace WindowsFormsApp1
             command.CommandType = CommandType.StoredProcedure;
 
     
-            command.Parameters.AddWithValue("@Id_Владельца", 101); 
+            command.Parameters.AddWithValue("@Id_Владельца", ownerId); 
             command.Parameters.AddWithValue("@ВУ_Водителя", textBox3.Text.Trim());
             command.Parameters.AddWithValue("@Гос_номер_ТС", textBox4.Text.Trim());
 
